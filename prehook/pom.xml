@@ -81,7 +81,7 @@
 							*
 						</Import-Package>
 						<Export-Package>
-							at.roedll.pax.jdbcpre.hook.test*
+							at.roedll.pax.jdbc.pre.hook.test*
 						</Export-Package>
 						<Private-Package>
 						</Private-Package>

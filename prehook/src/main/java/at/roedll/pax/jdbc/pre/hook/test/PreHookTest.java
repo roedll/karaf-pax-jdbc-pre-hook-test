@@ -1,4 +1,4 @@
-package at.roedll.pax.jdbcpre.hook.test;
+package at.roedll.pax.jdbc.pre.hook.test;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
