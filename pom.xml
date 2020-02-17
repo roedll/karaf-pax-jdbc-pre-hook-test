@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>at.roedll.test.pax.jdbc</groupId>
+	<artifactId>parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Pax JDBC - Test - Parent</name>
+	<description />
+	<url />
+
+	<modules>
+		<module>prehook</module>
+		<module>feature</module>
+		<module>framework</module>
+	</modules>
+
+	<properties>
+ 		<!-- General Settings -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- Build relevant information -->
+		<java.version>1.8</java.version>
+
+		<!-- Dependency version information -->
+		<osgi.service.component.annotations.version>1.4.0</osgi.service.component.annotations.version>
+
+		<apache.karaf.version>4.2.8</apache.karaf.version>
+
+		<log4j2.version>2.13.0</log4j2.version>
+
+		<pax.jdbc.version>1.4.4</pax.jdbc.version>
+
+		<postgresql.jdbc.version>42.2.10</postgresql.jdbc.version>
+	</properties>
+
+	<dependencies>
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- /Logging -->
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.osgi</groupId>
+				<artifactId>org.osgi.service.component.annotations</artifactId>
+				<version>${osgi.service.component.annotations.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>${postgresql.jdbc.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-api</artifactId>
+				<version>${log4j2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-core</artifactId>
+				<version>${log4j2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-slf4j-impl</artifactId>
+				<version>${log4j2.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<?m2e execute?>
+
+						<id>filter</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.1</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+						<encoding>UTF-8</encoding>
+						<showDeprecation>true</showDeprecation>
+						<showWarnings>true</showWarnings>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>4.2.1</version>
+					<extensions>true</extensions>
+					<configuration>
+						<instructions>
+							<Include-Resource>{maven-resources}</Include-Resource>
+							<!-- Remove headers that are not necessary at runtime -->
+							<_removeheaders>
+								Include-Resource,
+								Bnd-LastModified,
+								Built-By,
+								Tool,
+								Created-By,
+								Private-Package,
+								Build-Jdk,
+								Import-Service,
+								Export-Service
+							</_removeheaders>
+							<!-- Enable processing of OSGI DS component annotations -->
+							<_dsannotations>*</_dsannotations>
+							<!-- Enable processing of OSGI metatype annotations -->
+							<_metatypeannotations>*</_metatypeannotations>
+						</instructions>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.karaf.tooling</groupId>
+					<artifactId>karaf-maven-plugin</artifactId>
+					<version>${apache.karaf.version}</version>
+					<extensions>true</extensions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<profiles>
+	</profiles>
+
+	<repositories>
+	</repositories>
+
+	<pluginRepositories>
+	</pluginRepositories>
+
+</project>

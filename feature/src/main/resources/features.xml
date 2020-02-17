@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features name="dapas-garmin-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.6.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.6.0 http://karaf.apache.org/xmlns/features/v1.6.0">
+
+	<repository>mvn:org.apache.karaf.features/standard/${apache.karaf.version}/xml/features</repository>
+	<repository>mvn:org.apache.karaf.features/enterprise/${apache.karaf.version}/xml/features</repository>
+	<!--repository>mvn:org.apache.karaf.features/spring/${apache.karaf.version}/xml/features</repository-->
+
+	<feature name="pax-jdbc-prehook-test" version="${project.version}" description="">
+		<feature prerequisite="true" dependency="false">scr</feature>
+
+		<!-- TEST -->
+		<feature version="${pax.jdbc.version}">pax-jdbc-sqlite</feature>
+		<bundle>mvn:${project.groupId}/prehook/${project.version}</bundle>
+	</feature>
+
+</features>

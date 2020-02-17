@@ -1,0 +1,58 @@
+package at.roedll.pax.jdbcpre.hook.test;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.ops4j.pax.jdbc.hook.PreHook;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.ServiceScope;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
+@Component(
+        scope = ServiceScope.SINGLETON,
+        immediate = true,
+        service = PreHook.class,
+        property = PreHook.KEY_NAME + "=prehook-test-hook"
+)
+public class PreHookTest implements PreHook {
+
+    private static final Logger log = LogManager.getLogger(PreHookTest.class);
+
+    @Activate
+    public void init() {
+    	log.info("Starting {} ...", this.getClass().getSimpleName());
+    	
+    	//
+    }
+
+    @Deactivate
+    public void destroy() {
+    	log.info("Destroying {} ...", this.getClass().getSimpleName());
+   
+    	//
+    }
+    
+    @Override
+    public void prepare(final DataSource dataSource) throws SQLException {
+    	log.info("Called {}.prepare() ...", this.getClass().getSimpleName());
+    	
+        final String versionQuery = "SELECT \"value\" FROM meta WHERE \"key\" = 'schema_version'";
+
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(versionQuery)) {
+                final ResultSet result = stmt.executeQuery();
+                final int version = result.getInt("value");
+
+                log.info("Database schema version is {}", version);
+            }
+        }
+
+    }
+}

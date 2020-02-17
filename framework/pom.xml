@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<groupId>at.roedll.test.pax.jdbc</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>framework</artifactId>
+	<packaging>jar</packaging>
+	<name>Pax JDBC - Test - Framework</name>
+	<description></description>
+
+	<properties>
+		<!-- Path related information -->
+		<assembly.distributiondir.name>assembly</assembly.distributiondir.name>
+		<assembly.distributiondir.path>${project.build.directory}/${assembly.distributiondir.name}</assembly.distributiondir.path>
+	</properties>
+
+	<dependencies>
+		<!-- Karaf -->
+		<dependency>
+			<groupId>org.apache.karaf.features</groupId>
+			<artifactId>framework</artifactId>
+			<version>${apache.karaf.version}</version>
+			<type>kar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.karaf.features</groupId>
+			<artifactId>framework</artifactId>
+			<version>${apache.karaf.version}</version>
+			<classifier>features</classifier>
+			<type>xml</type>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.karaf.features</groupId>
+			<artifactId>standard</artifactId>
+			<version>${apache.karaf.version}</version>
+			<classifier>features</classifier>
+			<type>xml</type>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.karaf.features</groupId>
+			<artifactId>spring</artifactId>
+			<version>${apache.karaf.version}</version>
+			<classifier>features</classifier>
+			<type>xml</type>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.karaf.features</groupId>
+			<artifactId>enterprise</artifactId>
+			<version>${apache.karaf.version}</version>
+			<classifier>features</classifier>
+			<type>xml</type>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Feature -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>feature</artifactId>
+			<version>${project.version}</version>
+			<classifier>features</classifier>
+			<type>xml</type>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<outputDirectory>${project.build.directory}</outputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/src/main/resources</directory>
+									<targetPath>${assembly.distributiondir.path}</targetPath>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${project.basedir}/src/main/filtered-resources</directory>
+									<targetPath>${assembly.distributiondir.path}</targetPath>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.karaf.tooling</groupId>
+				<artifactId>karaf-maven-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<includeBuildOutputDirectory>false</includeBuildOutputDirectory>
+					<workDirectory>${assembly.distributiondir.path}</workDirectory>
+					<installedFeatures>
+						<feature>wrapper</feature>
+						<feature>aries-blueprint</feature>
+						<feature>shell-compat</feature>
+					</installedFeatures>
+					<startupFeatures>
+						<feature>eventadmin</feature>
+						<feature>pax-jdbc-sqlite</feature>
+						<!-- TEST -->
+						<feature>pax-jdbc-prehook-test</feature>
+					</startupFeatures>
+					<bootFeatures>
+						<feature>shell</feature>
+						<feature>feature</feature>
+						<feature>jaas</feature>
+						<feature>ssh</feature>
+						<feature>bundle</feature>
+						<feature>config</feature>
+						<feature>deployer</feature>
+						<feature>log</feature>
+						<!-- TEST -->
+						<feature>jdbc</feature>
+						<feature>transaction</feature>
+					</bootFeatures>
+					<pidsToExtract>
+						!jmx.acl.*,
+						!org.apache.karaf.command.acl.*,
+						!org.apache.felix.eventadmin.impl.EventAdmin,
+						*
+					</pidsToExtract>
+					<libraries>
+					</libraries>
+					<javase>1.8</javase>
+				</configuration>
+				<executions>
+					<execution>
+						<?m2e execute?>
+
+						<id>assembly</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>assembly</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
