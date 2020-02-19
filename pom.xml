@@ -125,10 +125,16 @@
 					<version>4.2.1</version>
 					<extensions>true</extensions>
 					<configuration>
+						<!-- Do not generate that OBR file in the local maven cache -->
+						<obrRepository>NONE</obrRepository>
+
 						<instructions>
-							<Include-Resource>{maven-resources}</Include-Resource>
+							<_nouses>true</_nouses>
+							<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+							
+							<!--Include-Resource>{maven-resources}</Include-Resource-->
 							<!-- Remove headers that are not necessary at runtime -->
-							<_removeheaders>
+							<!--_removeheaders>
 								Include-Resource,
 								Bnd-LastModified,
 								Built-By,
@@ -138,11 +144,11 @@
 								Build-Jdk,
 								Import-Service,
 								Export-Service
-							</_removeheaders>
+							</_removeheaders-->
 							<!-- Enable processing of OSGI DS component annotations -->
-							<_dsannotations>*</_dsannotations>
+							<!--_dsannotations>*</_dsannotations-->
 							<!-- Enable processing of OSGI metatype annotations -->
-							<_metatypeannotations>*</_metatypeannotations>
+							<!--_metatypeannotations>*</_metatypeannotations-->
 						</instructions>
 					</configuration>
 				</plugin>
