@@ -1,0 +1,41 @@
+Pax JDBC - Test - PreHook (55)
+------------------------------
+Bnd-LastModified = 1584436886763
+Build-Jdk = 1.8.0_201
+Built-By = roedll
+Created-By = Apache Maven Bundle Plugin
+Embed-Dependency = *;scope=compile|runtime;inline=false
+Embed-Transitive = true
+Embedded-Artifacts = pax-jdbc-pool-common-1.4.4.jar;g="org.ops4j.pax.jdbc";a="pax-jdbc-pool-common";v="1.4.4",log4j-jcl-2.13.0.jar;g="org.apache.logging.log4j";a="log4j-jcl";v="2.13.0",commons-logging-1.2.jar;g="commons-logging";a="commons-logging";v="1.2"
+Manifest-Version = 1.0
+Service-Component = OSGI-INF/at.roedll.pax.jdbc.pre.hook.test.PreHookServiceTracker.xml,OSGI-INF/at.roedll.pax.jdbc.pre.hook.test.PreHookTest.xml
+Tool = Bnd-4.2.0.201903051501
+
+Bundle-ClassPath = .,pax-jdbc-pool-common-1.4.4.jar,log4j-jcl-2.13.0.jar,commons-logging-1.2.jar
+Bundle-ManifestVersion = 2
+Bundle-Name = Pax JDBC - Test - PreHook
+Bundle-SymbolicName = prehook
+Bundle-Version = 1.0.0.SNAPSHOT
+
+Provide-Capability =
+        osgi.service;objectClass:List<String>=org.ops4j.pax.jdbc.hook.PreHook
+Require-Capability =
+        osgi.extender;filter:=(&(osgi.extender=osgi.component)(version>=1.4.0)(!(version>=2.0.0))),
+        osgi.ee;filter:=(&(osgi.ee=JavaSE)(version=1.8))
+
+Export-Package =
+        at.roedll.pax.jdbc.pre.hook.test;version=1.0.0
+Import-Package =
+        org.apache.log;resolution:=optional,
+        javax.servlet;resolution:=optional,
+        javax.sql,
+        javax.transaction,
+        org.apache.avalon.framework.logger,
+        org.apache.log4j,
+        org.apache.logging.log4j;version="[2.13,3)",
+        org.apache.logging.log4j.spi;version="[2.13,3)",
+        org.apache.logging.log4j.util;version="[2.13,3)",
+        org.osgi.framework;version="[1.8,2)",
+        org.osgi.service.jdbc,
+        org.osgi.util.tracker;version="[1.5,2)",
+        org.slf4j

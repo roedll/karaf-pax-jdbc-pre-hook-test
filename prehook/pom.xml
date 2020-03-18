@@ -92,8 +92,10 @@
 					<instructions>
 						<Karaf-Commands></Karaf-Commands>
 						<Import-Package>
+							<!--
 							org.apache.log;resolution:=optional,
 							javax.servlet;resolution:=optional,
+							-->
 							*
 						</Import-Package>
 						<Export-Package>
@@ -104,9 +106,9 @@
 						<DynamicImport-Package>
 						</DynamicImport-Package>
 						<Embed-Dependency>
-							*;scope=compile|runtime;inline=false
+							<!--*;scope=compile|runtime;inline=false-->
 						</Embed-Dependency>
-						<Embed-Transitive>true</Embed-Transitive>
+						<Embed-Transitive>false</Embed-Transitive>
 						<!-- Add Provide-Capability as the service is instantiated dynamically -->
 						<!--Provide-Capability>
 							osgi.service;objectClass="org.ops4j.pax.jdbc.hook.PreHook";name=test-prehook

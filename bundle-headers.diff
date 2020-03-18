@@ -1,0 +1,35 @@
+--- C:/dev/proj/pax-jdbc-pre-hook-test/bundle-headers-working.txt	Mi Mrz 18 16:45:42 2020
++++ C:/dev/proj/pax-jdbc-pre-hook-test/bundle-headers-failing.txt	Mi Mrz 18 16:45:33 2020
+@@ -1 +1 @@
+-Pax JDBC - Test - PreHook (50)
++Pax JDBC - Test - PreHook (55)
+@@ -3 +3 @@
+-Bnd-LastModified = 1584545988662
++Bnd-LastModified = 1584436886763
+@@ -6,0 +7,3 @@ Created-By = Apache Maven Bundle Plugin
++Embed-Dependency = *;scope=compile|runtime;inline=false
++Embed-Transitive = true
++Embedded-Artifacts = pax-jdbc-pool-common-1.4.4.jar;g="org.ops4j.pax.jdbc";a="pax-jdbc-pool-common";v="1.4.4",log4j-jcl-2.13.0.jar;g="org.apache.logging.log4j";a="log4j-jcl";v="2.13.0",commons-logging-1.2.jar;g="commons-logging";a="commons-logging";v="1.2"
+@@ -8 +11 @@ Manifest-Version = 1.0
+-Service-Component = OSGI-INF/at.roedll.pax.jdbc.pre.hook.test.PreHookTest.xml
++Service-Component = OSGI-INF/at.roedll.pax.jdbc.pre.hook.test.PreHookServiceTracker.xml,OSGI-INF/at.roedll.pax.jdbc.pre.hook.test.PreHookTest.xml
+@@ -10,0 +14 @@ Tool = Bnd-4.2.0.201903051501
++Bundle-ClassPath = .,pax-jdbc-pool-common-1.4.4.jar,log4j-jcl-2.13.0.jar,commons-logging-1.2.jar
+@@ -25 +29,2 @@ Import-Package =
+-        at.roedll.pax.jdbc.pre.hook.test,
++        org.apache.log;resolution:=optional,
++        javax.servlet;resolution:=optional,
+@@ -26,0 +32,3 @@ Import-Package =
++        javax.transaction,
++        org.apache.avalon.framework.logger,
++        org.apache.log4j,
+@@ -28 +36,2 @@ Import-Package =
+-        org.ops4j.pax.jdbc.hook;version="[1.4,2)",
++        org.apache.logging.log4j.spi;version="[2.13,3)",
++        org.apache.logging.log4j.util;version="[2.13,3)",
+@@ -30 +39,3 @@ Import-Package =
+-        org.osgi.util.tracker;version="[1.5,2)"
+\ No newline at end of file
++        org.osgi.service.jdbc,
++        org.osgi.util.tracker;version="[1.5,2)",
++        org.slf4j

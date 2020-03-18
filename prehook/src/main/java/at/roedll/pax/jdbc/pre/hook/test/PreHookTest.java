@@ -6,7 +6,6 @@ import org.ops4j.pax.jdbc.hook.PreHook;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.ServiceScope;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,9 +15,9 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 @Component(
-    scope = ServiceScope.SINGLETON,
+    //scope = ServiceScope.SINGLETON,
     immediate = true,
-    service = PreHook.class,
+    //service = PreHook.class,
     property = PreHook.KEY_NAME + "=prehooktesthook"
 )
 public class PreHookTest implements PreHook {
