@@ -16,12 +16,28 @@
 	<description />
 
 	<dependencies>
+		
 		<!-- OSGi -->
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!--dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.service.cm</artifactId>
+			<scope>provided</scope>
+		</dependency-->
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.service.component.annotations</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!--dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.service.event</artifactId>
+			<scope>provided</scope>
+		</dependency-->
 		<!-- /OSGi -->
 
 		<!-- JDBC - PreHook -->
@@ -92,9 +108,9 @@
 						</Embed-Dependency>
 						<Embed-Transitive>true</Embed-Transitive>
 						<!-- Add Provide-Capability as the service is instantiated dynamically -->
-						<Provide-Capability>
+						<!--Provide-Capability>
 							osgi.service;objectClass="org.ops4j.pax.jdbc.hook.PreHook";name=test-prehook
-						</Provide-Capability>
+						</Provide-Capability-->
 					</instructions>
 				</configuration>
 			</plugin>

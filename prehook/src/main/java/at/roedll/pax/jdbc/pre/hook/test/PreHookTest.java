@@ -6,6 +6,7 @@ import org.ops4j.pax.jdbc.hook.PreHook;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.ServiceScope;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,32 +16,36 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 @Component(
-        //scope = ServiceScope.SINGLETON,
-        immediate = true,
-        //service = PreHook.class,
-        property = PreHook.KEY_NAME + "=prehook-test-hook"
+    scope = ServiceScope.SINGLETON,
+    immediate = true,
+    service = PreHook.class,
+    property = PreHook.KEY_NAME + "=prehooktesthook"
 )
 public class PreHookTest implements PreHook {
 
-    private static final Logger log = LogManager.getLogger(PreHookTest.class);
+	protected final Logger log = LogManager.getLogger(PreHookTest.class);
+	
+	public PreHookTest() {
+		super();
+	}
 
     @Activate
     public void init() {
-    	log.info("Starting {} ...", this.getClass().getSimpleName());
+		log.error("Starting {}", this.getClass().getSimpleName());
     	
     	//
     }
 
     @Deactivate
     public void destroy() {
-    	log.info("Destroying {} ...", this.getClass().getSimpleName());
+		log.error("Destroying {}", this.getClass().getSimpleName());
    
     	//
     }
     
     @Override
     public void prepare(final DataSource dataSource) throws SQLException {
-    	log.info("Called {}.prepare() ...", this.getClass().getSimpleName());
+    	log.error("Called {}.prepare() ...", this.getClass().getSimpleName());
     	
         final String versionQuery = "SELECT \"value\" FROM meta WHERE \"key\" = 'schema_version'";
 
@@ -49,7 +54,7 @@ public class PreHookTest implements PreHook {
                 final ResultSet result = stmt.executeQuery();
                 final int version = result.getInt("value");
 
-                log.info("Database schema version is {}", version);
+                log.warn("Database schema version is {}", version);
             }
         }
 
